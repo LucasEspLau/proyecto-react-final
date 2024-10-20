@@ -19,7 +19,7 @@ export default function CrearProducto(){
     const handleCreateProduct = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(formData);
-        fetch('https://servidor-qt8f.onrender.com/api/product-create', {
+        fetch('https://servidor-2-uok1.onrender.com/api/product-create', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
