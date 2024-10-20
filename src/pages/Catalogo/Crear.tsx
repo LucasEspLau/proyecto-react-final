@@ -8,6 +8,7 @@ export default function CrearProducto(){
         precio: '',
         stock: '',
     });
+    const [isLoading,setIsLoading] = useState(false);
 
     // Manejar el cambio en los campos del formulario
     const handleInputChange = (e:React.ChangeEvent<HTMLInputElement>) => {
@@ -19,17 +20,19 @@ export default function CrearProducto(){
     const handleCreateProduct = (e:React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log(formData);
+        setIsLoading(true);
         fetch('https://servidor-2-uok1.onrender.com/api/product-create', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
         })
         .then((response) => response.json())
         .then((newProduct) => {
             resetForm();
             console.log("Producto creado: ",newProduct)
+            setIsLoading(false);
         })
         .catch((error) => console.error('Error al crear el producto:', error));
     };
@@ -89,7 +92,11 @@ export default function CrearProducto(){
                         className="p-3 border border-blue-300 rounded-lg focus:ring focus:ring-blue-200"
                     />
                     <button
+                        style={{
+                            backgroundColor: !isLoading ? 'blue' : '#ccc'
+                        }}
                         type="submit"
+                        disabled={isLoading}
                         className="p-3 bg-blue-500 text-white font-bold rounded-lg hover:bg-blue-600 transition-colors"
                     >
                         Crear Producto

@@ -16,6 +16,7 @@ export default function Navbar() {
                 Inicio
             </Link>
             <ul className="flex flex-row gap-6">
+                {user.isLoggedIn && user.userSession?.t_rol==2&&(
                 <li>
                     <Link
                         to="/crear-producto"
@@ -24,6 +25,8 @@ export default function Navbar() {
                         Crear Producto
                     </Link>
                 </li>
+                )}
+
                 <li>
                     <Link
                         to="/catalogo"

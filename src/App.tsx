@@ -6,8 +6,13 @@ import CrearProducto from './pages/Catalogo/Crear';
 import Login from './pages/Login/Login';
 import Registro from './pages/Registro/Registro';
 import Footer from './components/Footer';
+import { useSelector } from 'react-redux';
+import { UserState } from './redux/slices/userSlice';
 
 function App() {
+
+  const user = useSelector((state:{user:UserState}) => state.user);
+
 
 
   return (
@@ -17,9 +22,22 @@ function App() {
 
       <Routes>
 
+        {user.isLoggedIn && user.userSession?.t_rol==2&&(
+          <>
+            <Route path='/' element={<Inicio/>}/>
+            <Route path='/catalogo' element={<Catalogo/>}/>
+            <Route path='/crear-producto' element={<CrearProducto/>}/>
+          </>
+        )}
+        {user.isLoggedIn && user.userSession?.t_rol==1 && (
+          <>
+            <Route path='/' element={<Inicio/>}/>
+            <Route path='/catalogo' element={<Catalogo/>}/>
+          </>
+        )}
+        <Route path='*' element={<Inicio/>}/>
         <Route path='/' element={<Inicio/>}/>
         <Route path='/catalogo' element={<Catalogo/>}/>
-        <Route path='/crear-producto' element={<CrearProducto/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/registrarse' element={<Registro/>}/>
 

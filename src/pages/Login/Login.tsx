@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../../redux/slices/userSlice";
 import { UserSession } from "../../util/definitions";
+import { useNavigate } from "react-router-dom";
 
 export default function Login() {
     const dispatch = useDispatch(); 
@@ -10,6 +11,8 @@ export default function Login() {
     n_doc: ""  
     });
   const [msj, setMsj] = useState("");
+
+  const navigate=useNavigate();
   const handleChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData({
@@ -37,6 +40,7 @@ export default function Login() {
         console.log(datos);
         dispatch(login(datos.user  as UserSession))
         setMsj(datos.message);
+        navigate("/")
 
       } else {
         const errorData = await res.json(); // Intentamos obtener más información del error
